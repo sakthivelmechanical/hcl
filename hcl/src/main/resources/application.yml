@@ -1,0 +1,43 @@
+spring:
+  application:
+    name=hcl
+
+
+  datasource:
+    # IMPORTANT: url must start with jdbc:mysql:// (two slashes)
+    url: "jdbc:mysql://gateway01.ap-southeast-1.prod.aws.tidbcloud.com:4000/test?useSSL=true&sslMode=REQUIRED&serverTimezone=UTC"
+    username: "2ArZ7qwdWFxs1A4.root"
+    password: "eFkCjGrvQUdv8ivo"
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+    # HikariCP settings (optional, good defaults)
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  jpa:
+    hibernate:
+      ddl-auto: validate     # change to update for dev only
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+# If Hibernate fails to auto-detect dialect, uncomment the next line and try the generic MySQL dialect:
+# spring:
+#   jpa:
+#     properties:
+#       hibernate:
+#         dialect: org.hibernate.dialect.MySQLDialect
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+
+server:
+  port: 8080
