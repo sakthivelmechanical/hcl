@@ -18,6 +18,10 @@ public class Settlement {
     @Column(name = "customer_id", nullable = false)
     private Integer customerId;
 
+    @Column(name = "merchant_id", nullable = false)
+    private Integer merchantId;
+
+
     @Column(name = "user_id", nullable = false)
     private Integer userId;
 
@@ -88,5 +92,13 @@ public class Settlement {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Integer getMerchantId() {
+        return merchantId;
+    }
+
+    public void setMerchantId(Integer merchantId) {
+        this.merchantId = merchantId;
     }
 }

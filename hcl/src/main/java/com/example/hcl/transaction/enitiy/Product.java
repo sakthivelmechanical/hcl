@@ -1,0 +1,79 @@
+package com.example.hcl.transaction.enitiy;
+
+
+import jakarta.persistence.*;
+import java.math.BigDecimal;
+
+@Entity
+@Table(name = "product_table")
+public class Product {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "product_name", nullable = false, length = 150)
+    private String productName;
+
+    @Column(name = "product_cost", nullable = false, precision = 15, scale = 2)
+    private BigDecimal productCost;
+
+    @Column(name = "merchant_id", nullable = false)
+    private Long merchantId;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "currency_type", nullable = false, length = 10)
+    private String currencyType;
+
+    // Constructors
+    public Product() {}
+
+    public Product(String productName, BigDecimal productCost, Long merchantId, String currencyType) {
+        this.productName = productName;
+        this.productCost = productCost;
+        this.merchantId = merchantId;
+        this.currencyType = currencyType;
+    }
+
+    // Getters & Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public BigDecimal getProductCost() {
+        return productCost;
+    }
+
+    public void setProductCost(BigDecimal productCost) {
+        this.productCost = productCost;
+    }
+
+    public Long getMerchantId() {
+        return merchantId;
+    }
+
+    public void setMerchantId(Long merchantId) {
+        this.merchantId = merchantId;
+    }
+
+    public String getCurrencyType() {
+        return currencyType;
+    }
+
+    public void setCurrencyType(String currencyType) {
+        this.currencyType = currencyType;
+    }
+}
+

@@ -13,7 +13,7 @@ public class Wallet {
     private Long id;
 
     @Column(nullable = false, precision = 15, scale = 2)
-    private BigDecimal balance;
+    private Long balance;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "currency_type", nullable = false, length = 10)
@@ -22,7 +22,7 @@ public class Wallet {
     // Constructors
     public Wallet() {}
 
-    public Wallet(BigDecimal balance, String currencyType) {
+    public Wallet(Long balance, String currencyType) {
         this.balance = balance;
         this.currencyType = currencyType;
     }
@@ -36,11 +36,11 @@ public class Wallet {
         this.id = id;
     }
 
-    public BigDecimal getBalance() {
+    public Long getBalance() {
         return balance;
     }
 
-    public void setBalance(BigDecimal balance) {
+    public void setBalance(Long balance) {
         this.balance = balance;
     }
 

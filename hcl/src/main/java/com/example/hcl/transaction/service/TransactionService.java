@@ -5,12 +5,15 @@ import com.example.hcl.transaction.Repository.CustomerRepository;
 import com.example.hcl.transaction.Repository.SettlementRepository;
 import com.example.hcl.transaction.Repository.TransactionRepository;
 import com.example.hcl.transaction.Repository.WalletRepository;
+import com.example.hcl.transaction.enitiy.Customer;
 import com.example.hcl.transaction.enitiy.TransactionTable;
+import com.example.hcl.transaction.enitiy.Wallet;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class TransactionService implements Transaction{
@@ -34,6 +37,7 @@ public class TransactionService implements Transaction{
     }
 
 
+
     private Integer createTransaction(Integer userId, Integer productId){
         TransactionTable transactionTable = new TransactionTable();
         transactionTable.setProductId(productId);
@@ -45,8 +49,19 @@ public class TransactionService implements Transaction{
     }
 
     private void updateWallet(Integer userId, Integer amount){
-        customerRepository.f
-        walletRepository.findByIdForUpdate()
+       Customer customer =  customerRepository.findById(userId);
+       Optional<Wallet> walletOptional =  walletRepository.findByIdForUpdate(customer.getWalletId());
+       if(walletOptional.isPresent()) {
+           Wallet wallet = walletOptional.get();
+           long l = wallet.getBalance() - amount.longValue();
+           wallet.setBalance(l);
+           walletRepository.save(wallet);
+       }
+    }
+
+    private void settlement(){
+
+
     }
 
 
