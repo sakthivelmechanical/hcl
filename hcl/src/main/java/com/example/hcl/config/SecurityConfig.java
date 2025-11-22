@@ -39,7 +39,6 @@ public class SecurityConfig {
         UserDetails user = User.builder()
                 .username(authProps.getUsername())
                 .password("{noop}" + authProps.getPassword()) // plain text
-                .roles(authProps.getRole())
                 .build();
 
         return new InMemoryUserDetailsManager(user);
