@@ -41,7 +41,6 @@ public class TransactionService implements Transaction{
     public Integer createTransaction(Integer userId, Integer productId){
         TransactionTable transactionTable = new TransactionTable();
         transactionTable.setProductId(productId);
-        transactionTable.setUserId(userId);
         transactionTable.setTransactionType("DEBIT");
         transactionTable.setDate(LocalDateTime.now());
         transactionRepository.save(transactionTable);

@@ -22,8 +22,6 @@ public class Settlement {
     private Integer merchantId;
 
 
-    @Column(name = "user_id", nullable = false)
-    private Integer userId;
 
     @Column(name = "amount", nullable = false, precision = 15, scale = 2)
     private Long amount;
@@ -38,11 +36,10 @@ public class Settlement {
     public Settlement() {
     }
 
-    public Settlement(Integer transactionId, Integer customerId, Integer userId,
+    public Settlement(Integer transactionId, Integer customerId,
                       Long amount, String status) {
         this.transactionId = transactionId;
         this.customerId = customerId;
-        this.userId = userId;
         this.amount = amount;
         this.status = status;
     }
@@ -73,13 +70,7 @@ public class Settlement {
         this.customerId = customerId;
     }
 
-    public Integer getUserId() {
-        return userId;
-    }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
 
     public Long getAmount() {
         return amount;

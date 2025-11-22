@@ -4,7 +4,7 @@ package com.example.hcl.transaction.enitiy;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "product_table")
+@Table(name = "product")
 public class Product {
 
     @Id

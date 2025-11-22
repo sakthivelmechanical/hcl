@@ -15,7 +15,6 @@ public class Wallet {
     @Column(nullable = false, precision = 15, scale = 2)
     private Long balance;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "currency_type", nullable = false, length = 10)
     private String currencyType;
 

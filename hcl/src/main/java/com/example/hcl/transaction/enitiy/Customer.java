@@ -19,20 +19,17 @@ public class Customer {
     @Column(name = "email_id", nullable = false, length = 100)
     private String emailId;
 
-    @Column(nullable = false, length = 200)
-    private String location;
 
     @Column(name = "wallet_id", nullable = false)
-    private Long walletId;  // <-- No relation, simple FK value
+    private Integer walletId;  // <-- No relation, simple FK value
 
     // Constructors
     public Customer() {}
 
-    public Customer(String name, String phoneNumber, String emailId, String location, Long walletId) {
+    public Customer(String name, String phoneNumber, String emailId, Integer walletId) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.emailId = emailId;
-        this.location = location;
         this.walletId = walletId;
     }
 
@@ -69,19 +66,12 @@ public class Customer {
         this.emailId = emailId;
     }
 
-    public String getLocation() {
-        return location;
-    }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public Long getWalletId() {
+    public Integer getWalletId() {
         return walletId;
     }
 
-    public void setWalletId(Long walletId) {
+    public void setWalletId(Integer walletId) {
         this.walletId = walletId;
     }
 }
