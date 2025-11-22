@@ -2,7 +2,7 @@ package com.example.hcl.transaction.enitiy;
 
 
 import jakarta.persistence.*;
-import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "settlement")
@@ -22,24 +22,24 @@ public class Settlement {
     private Integer merchantId;
 
 
-    @Column(name = "user_id", nullable = false)
-    private Integer userId;
 
     @Column(name = "amount", nullable = false, precision = 15, scale = 2)
-    private BigDecimal amount;
+    private Long amount;
 
     @Column(name = "status", nullable = false, length = 20)
     private String status;
+
+    @Column(name = "date", nullable = false)
+    private LocalDateTime date;
 
     // Constructors
     public Settlement() {
     }
 
-    public Settlement(Integer transactionId, Integer customerId, Integer userId,
-                      BigDecimal amount, String status) {
+    public Settlement(Integer transactionId, Integer customerId,
+                      Long amount, String status) {
         this.transactionId = transactionId;
         this.customerId = customerId;
-        this.userId = userId;
         this.amount = amount;
         this.status = status;
     }
@@ -70,19 +70,13 @@ public class Settlement {
         this.customerId = customerId;
     }
 
-    public Integer getUserId() {
-        return userId;
-    }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
 
-    public BigDecimal getAmount() {
+    public Long getAmount() {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
+    public void setAmount(Long amount) {
         this.amount = amount;
     }
 
@@ -100,5 +94,13 @@ public class Settlement {
 
     public void setMerchantId(Integer merchantId) {
         this.merchantId = merchantId;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 }

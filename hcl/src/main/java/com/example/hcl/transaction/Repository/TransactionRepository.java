@@ -11,9 +11,9 @@ package com.example.hcl.transaction.Repository;
  import java.util.Optional;
 
 @Repository
-public interface TransactionRepository extends JpaRepository<TransactionTable, Long> {
+public interface TransactionRepository extends JpaRepository<TransactionTable, Integer> {
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    @Query("select t from Transaction t where t.id = :id")
-    Optional<TransactionTable> findByIdForUpdate(Long id);
+    @Query("select t from TransactionTable t where t.id = :id")
+    Optional<TransactionTable> findByIdForUpdate(Integer id);
 }

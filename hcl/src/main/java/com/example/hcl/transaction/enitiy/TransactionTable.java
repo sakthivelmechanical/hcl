@@ -5,18 +5,22 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "transaction")
+@Table(name = "transaction_record")
 public class TransactionTable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "user_id", nullable = false)
-    private Integer userId;
 
     @Column(name = "product_id", nullable = false)
     private Integer productId;
+
+    @Column(name = "debit_wallet_id")
+    private Integer debitWalletId;
+
+    @Column(name = "credit_wallet_id")
+    private Integer creditWalletId;
 
     @Column(name = "transaction_type", nullable = false, length = 50)
     private String transactionType;
@@ -29,7 +33,6 @@ public class TransactionTable {
     }
 
     public TransactionTable(Integer userId, Integer productId, String transactionType, LocalDateTime date) {
-        this.userId = userId;
         this.productId = productId;
         this.transactionType = transactionType;
         this.date = date;
@@ -45,13 +48,6 @@ public class TransactionTable {
         this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
 
     public Integer getProductId() {
         return productId;
@@ -75,5 +71,21 @@ public class TransactionTable {
 
     public void setDate(LocalDateTime date) {
         this.date = date;
+    }
+
+    public Integer getDebitWalletId() {
+        return debitWalletId;
+    }
+
+    public void setDebitWalletId(Integer debitWalletId) {
+        this.debitWalletId = debitWalletId;
+    }
+
+    public Integer getCreditWalletId() {
+        return creditWalletId;
+    }
+
+    public void setCreditWalletId(Integer creditWalletId) {
+        this.creditWalletId = creditWalletId;
     }
 }

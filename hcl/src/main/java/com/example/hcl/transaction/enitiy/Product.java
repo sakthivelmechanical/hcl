@@ -2,33 +2,32 @@ package com.example.hcl.transaction.enitiy;
 
 
 import jakarta.persistence.*;
-import java.math.BigDecimal;
 
 @Entity
-@Table(name = "product_table")
+@Table(name = "product")
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "product_name", nullable = false, length = 150)
     private String productName;
 
     @Column(name = "product_cost", nullable = false, precision = 15, scale = 2)
-    private BigDecimal productCost;
+    private Long productCost;
 
     @Column(name = "merchant_id", nullable = false)
-    private Long merchantId;
+    private Integer merchantId;
 
-    @Enumerated(EnumType.STRING)
+    //@Enumerated(EnumType.STRING)
     @Column(name = "currency_type", nullable = false, length = 10)
     private String currencyType;
 
     // Constructors
     public Product() {}
 
-    public Product(String productName, BigDecimal productCost, Long merchantId, String currencyType) {
+    public Product(String productName, Long productCost, Integer merchantId, String currencyType) {
         this.productName = productName;
         this.productCost = productCost;
         this.merchantId = merchantId;
@@ -36,11 +35,11 @@ public class Product {
     }
 
     // Getters & Setters
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -52,19 +51,19 @@ public class Product {
         this.productName = productName;
     }
 
-    public BigDecimal getProductCost() {
+    public Long getProductCost() {
         return productCost;
     }
 
-    public void setProductCost(BigDecimal productCost) {
+    public void setProductCost(Long productCost) {
         this.productCost = productCost;
     }
 
-    public Long getMerchantId() {
+    public Integer getMerchantId() {
         return merchantId;
     }
 
-    public void setMerchantId(Long merchantId) {
+    public void setMerchantId(Integer merchantId) {
         this.merchantId = merchantId;
     }
 

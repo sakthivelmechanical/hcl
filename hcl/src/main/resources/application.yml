@@ -5,7 +5,7 @@ spring:
 
   datasource:
     # IMPORTANT: url must start with jdbc:mysql:// (two slashes)
-    url: "jdbc:mysql://gateway01.ap-southeast-1.prod.aws.tidbcloud.com:4000/test?useSSL=true&sslMode=REQUIRED&serverTimezone=UTC"
+    url: "jdbc:mysql://gateway01.ap-southeast-1.prod.aws.tidbcloud.com:4000/e_wallet?useSSL=true&sslMode=REQUIRED&serverTimezone=UTC"
     username: "2ArZ7qwdWFxs1A4.root"
     password: "eFkCjGrvQUdv8ivo"
     driver-class-name: com.mysql.cj.jdbc.Driver

@@ -10,12 +10,11 @@ public class Wallet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(nullable = false, precision = 15, scale = 2)
     private Long balance;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "currency_type", nullable = false, length = 10)
     private String currencyType;
 
@@ -28,11 +27,11 @@ public class Wallet {
     }
 
     // Getters and Setters
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

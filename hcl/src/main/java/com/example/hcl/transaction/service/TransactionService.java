@@ -1,13 +1,8 @@
 package com.example.hcl.transaction.service;
 
 
-import com.example.hcl.transaction.Repository.CustomerRepository;
-import com.example.hcl.transaction.Repository.SettlementRepository;
-import com.example.hcl.transaction.Repository.TransactionRepository;
-import com.example.hcl.transaction.Repository.WalletRepository;
-import com.example.hcl.transaction.enitiy.Customer;
-import com.example.hcl.transaction.enitiy.TransactionTable;
-import com.example.hcl.transaction.enitiy.Wallet;
+import com.example.hcl.transaction.Repository.*;
+import com.example.hcl.transaction.enitiy.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,30 +20,34 @@ public class TransactionService implements Transaction{
     SettlementRepository settlementRepository;
 
     @Autowired
+    ProductRepository productRepository;
+
+    @Autowired
     WalletRepository walletRepository;
     @Autowired
     CustomerRepository customerRepository;
 
     @Transactional
-    public void placeOrder(Integer userId, Integer productId){
+    public Integer placeOrder(Integer userId, Integer productId){
        Integer transactionId =  createTransaction(userId, productId);
-
-
+       Product product =  productRepository.findById(productId);
+       updateWallet(userId, product.getProductCost().intValue());
+       settlement(transactionId, userId, product.getMerchantId(), product.getProductCost());
+       return transactionId;
     }
 
 
 
-    private Integer createTransaction(Integer userId, Integer productId){
+    public Integer createTransaction(Integer userId, Integer productId){
         TransactionTable transactionTable = new TransactionTable();
         transactionTable.setProductId(productId);
-        transactionTable.setUserId(userId);
         transactionTable.setTransactionType("DEBIT");
         transactionTable.setDate(LocalDateTime.now());
         transactionRepository.save(transactionTable);
         return transactionTable.getId();
     }
 
-    private void updateWallet(Integer userId, Integer amount){
+    public void updateWallet(Integer userId, Integer amount){
        Customer customer =  customerRepository.findById(userId);
        Optional<Wallet> walletOptional =  walletRepository.findByIdForUpdate(customer.getWalletId());
        if(walletOptional.isPresent()) {
@@ -59,9 +58,14 @@ public class TransactionService implements Transaction{
        }
     }
 
-    private void settlement(){
-
-
+    public void settlement(int transactionId,Integer userId, Integer merchantId, Long amount ){
+        Settlement settlement = new Settlement();
+        settlement.setTransactionId(transactionId);
+        settlement.setAmount(amount);
+        settlement.setMerchantId(merchantId);
+        settlement.setStatus("HOLD");
+        settlement.setDate(LocalDateTime.now());
+        settlementRepository.save(settlement);
     }
 
 
