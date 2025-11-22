@@ -93,7 +93,7 @@ public class TransactionService implements Transaction{
         if(walletOptional.isPresent()) {
             Wallet wallet = walletOptional.get();
             Product product = productRepository.findById(projectId);
-            Merchant merchant =  merchantRepository.findById(product.getMerchantId());
+            Merchant merchant =  merchantRepository.findById(product.getMerchantId()).get();
             Optional<Wallet> walletMerchantOptional =  walletRepository.findByIdForUpdateNative(merchant.getWalletId());
             Wallet wallet1 = walletMerchantOptional.get();
             if(!wallet.getCurrencyType().equalsIgnoreCase(wallet1.getCurrencyType())){

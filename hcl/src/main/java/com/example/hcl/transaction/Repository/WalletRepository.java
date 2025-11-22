@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface WalletRepository extends JpaRepository<Wallet, Long> {
+public interface WalletRepository extends JpaRepository<Wallet, Integer> {
 //@Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query(value = "SELECT * FROM wallet WHERE id = :id FOR UPDATE", nativeQuery = true)
     Optional<Wallet> findByIdForUpdateNative(@Param("id") Integer id);
