@@ -1,13 +1,8 @@
 package com.example.hcl.transaction.service;
 
 
-import com.example.hcl.transaction.Repository.CustomerRepository;
-import com.example.hcl.transaction.Repository.SettlementRepository;
-import com.example.hcl.transaction.Repository.TransactionRepository;
-import com.example.hcl.transaction.Repository.WalletRepository;
-import com.example.hcl.transaction.enitiy.Customer;
-import com.example.hcl.transaction.enitiy.TransactionTable;
-import com.example.hcl.transaction.enitiy.Wallet;
+import com.example.hcl.transaction.Repository.*;
+import com.example.hcl.transaction.enitiy.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +20,9 @@ public class TransactionService implements Transaction{
     SettlementRepository settlementRepository;
 
     @Autowired
+    ProductRepository productRepository;
+
+    @Autowired
     WalletRepository walletRepository;
     @Autowired
     CustomerRepository customerRepository;
@@ -32,6 +30,8 @@ public class TransactionService implements Transaction{
     @Transactional
     public void placeOrder(Integer userId, Integer productId){
        Integer transactionId =  createTransaction(userId, productId);
+       Product product =  productRepository.findById(productId);
+       updateWallet(userId, product.getProductCost().intValue());
 
 
     }
@@ -59,8 +59,9 @@ public class TransactionService implements Transaction{
        }
     }
 
-    private void settlement(){
-
+    private void settlement(int transactionId,Integer userId, Integer merchantId, Integer amount ){
+        Settlement settlement = new Settlement();
+     //   settlement.
 
     }
 
