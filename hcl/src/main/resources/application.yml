@@ -41,3 +41,9 @@ logging:
 
 server:
   port: 8080
+  
+security:
+  basic-auth:
+      username: squad2
+      password: hcl@squad2
+
