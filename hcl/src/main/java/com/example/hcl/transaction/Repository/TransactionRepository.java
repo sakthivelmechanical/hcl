@@ -14,6 +14,6 @@ package com.example.hcl.transaction.Repository;
 public interface TransactionRepository extends JpaRepository<TransactionTable, Integer> {
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-   // @Query("select t from transaction_record t where t.id = :id")
+    @Query("select t from TransactionTable t where t.id = :id")
     Optional<TransactionTable> findByIdForUpdate(Integer id);
 }
