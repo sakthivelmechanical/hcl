@@ -9,7 +9,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "product_name", nullable = false, length = 150)
     private String productName;
@@ -18,7 +18,7 @@ public class Product {
     private Long productCost;
 
     @Column(name = "merchant_id", nullable = false)
-    private Long merchantId;
+    private Integer merchantId;
 
     //@Enumerated(EnumType.STRING)
     @Column(name = "currency_type", nullable = false, length = 10)
@@ -27,7 +27,7 @@ public class Product {
     // Constructors
     public Product() {}
 
-    public Product(String productName, Long productCost, Long merchantId, String currencyType) {
+    public Product(String productName, Long productCost, Integer merchantId, String currencyType) {
         this.productName = productName;
         this.productCost = productCost;
         this.merchantId = merchantId;
@@ -35,11 +35,11 @@ public class Product {
     }
 
     // Getters & Setters
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -59,11 +59,11 @@ public class Product {
         this.productCost = productCost;
     }
 
-    public Long getMerchantId() {
+    public Integer getMerchantId() {
         return merchantId;
     }
 
-    public void setMerchantId(Long merchantId) {
+    public void setMerchantId(Integer merchantId) {
         this.merchantId = merchantId;
     }
 

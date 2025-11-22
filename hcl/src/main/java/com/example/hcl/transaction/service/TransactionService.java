@@ -28,17 +28,17 @@ public class TransactionService implements Transaction{
     CustomerRepository customerRepository;
 
     @Transactional
-    public void placeOrder(Integer userId, Integer productId){
+    public Integer placeOrder(Integer userId, Integer productId){
        Integer transactionId =  createTransaction(userId, productId);
        Product product =  productRepository.findById(productId);
        updateWallet(userId, product.getProductCost().intValue());
-
-
+       settlement(transactionId, userId, product.getMerchantId(), product.getProductCost());
+       return transactionId;
     }
 
 
 
-    private Integer createTransaction(Integer userId, Integer productId){
+    public Integer createTransaction(Integer userId, Integer productId){
         TransactionTable transactionTable = new TransactionTable();
         transactionTable.setProductId(productId);
         transactionTable.setUserId(userId);
@@ -48,7 +48,7 @@ public class TransactionService implements Transaction{
         return transactionTable.getId();
     }
 
-    private void updateWallet(Integer userId, Integer amount){
+    public void updateWallet(Integer userId, Integer amount){
        Customer customer =  customerRepository.findById(userId);
        Optional<Wallet> walletOptional =  walletRepository.findByIdForUpdate(customer.getWalletId());
        if(walletOptional.isPresent()) {
@@ -59,10 +59,14 @@ public class TransactionService implements Transaction{
        }
     }
 
-    private void settlement(int transactionId,Integer userId, Integer merchantId, Integer amount ){
+    public void settlement(int transactionId,Integer userId, Integer merchantId, Long amount ){
         Settlement settlement = new Settlement();
-     //   settlement.
-
+        settlement.setTransactionId(transactionId);
+        settlement.setAmount(amount);
+        settlement.setMerchantId(merchantId);
+        settlement.setStatus("HOLD");
+        settlement.setDate(LocalDateTime.now());
+        settlementRepository.save(settlement);
     }
 
 
