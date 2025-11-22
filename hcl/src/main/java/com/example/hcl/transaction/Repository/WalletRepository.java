@@ -12,7 +12,11 @@ import java.util.Optional;
 
 @Repository
 public interface WalletRepository extends JpaRepository<Wallet, Long> {
-//@Lock(LockModeType.PESSIMISTIC_WRITE)
+   // @Lock(LockModeType.PESSIMISTIC_WRITE)
+
+//    @Query(value = "SELECT * FROM wallet WHERE id = :id FOR UPDATE", nativeQuery = true)
+//    Optional<Wallet> findByIdForUpdateNative(@Param("id") Integer id);
+
     @Query(value = "SELECT * FROM wallet WHERE id = :id FOR UPDATE", nativeQuery = true)
     Optional<Wallet> findByIdForUpdateNative(@Param("id") Integer id);
 }

@@ -25,6 +25,9 @@ public class TransactionTable {
     @Column(name = "transaction_type", nullable = false, length = 50)
     private String transactionType;
 
+    @Column(name = "amount")
+    private Integer anount;
+
     @Column(name = "date", nullable = false)
     private LocalDateTime date;
 
@@ -87,5 +90,13 @@ public class TransactionTable {
 
     public void setCreditWalletId(Integer creditWalletId) {
         this.creditWalletId = creditWalletId;
+    }
+
+    public Integer getAnount() {
+        return anount;
+    }
+
+    public void setAnount(Integer anount) {
+        this.anount = anount;
     }
 }
