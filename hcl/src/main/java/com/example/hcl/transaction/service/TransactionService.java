@@ -1,6 +1,8 @@
 package com.example.hcl.transaction.service;
 
 
+import com.example.hcl.transaction.Exception.InValidCurrencyException;
+import com.example.hcl.transaction.Exception.InsufficientFundsException;
 import com.example.hcl.transaction.Repository.*;
 import com.example.hcl.transaction.enitiy.*;
 import jakarta.transaction.Transactional;
@@ -26,9 +28,13 @@ public class TransactionService implements Transaction{
     WalletRepository walletRepository;
     @Autowired
     CustomerRepository customerRepository;
+    @Autowired
+    MerchantRepository merchantRepository;
 
     @Transactional
     public Integer placeOrder(Integer userId, Integer productId){
+        checkFundAvailability(userId, productId);
+        checkCurrencyValidation(userId, productId);
        Integer transactionId =  createTransaction(userId, productId);
        Product product =  productRepository.findById(productId);
        updateWallet(userId, product.getProductCost().intValue());
@@ -49,7 +55,7 @@ public class TransactionService implements Transaction{
 
     public void updateWallet(Integer userId, Integer amount){
        Customer customer =  customerRepository.findById(userId);
-       Optional<Wallet> walletOptional =  walletRepository.findByIdForUpdate(customer.getWalletId());
+       Optional<Wallet> walletOptional =  walletRepository.findByIdForUpdateNative(customer.getWalletId());
        if(walletOptional.isPresent()) {
            Wallet wallet = walletOptional.get();
            long l = wallet.getBalance() - amount.longValue();
@@ -68,5 +74,32 @@ public class TransactionService implements Transaction{
         settlementRepository.save(settlement);
     }
 
+    public void checkFundAvailability(Integer userId, Integer projectId){
+        Customer customer =  customerRepository.findById(userId);
+        Optional<Wallet> walletOptional =  walletRepository.findByIdForUpdateNative(customer.getWalletId());
+        if(walletOptional.isPresent()) {
+            Wallet wallet = walletOptional.get();
+           Product product = productRepository.findById(projectId);
+           if(wallet.getBalance()<product.getProductCost()){
+                throw new InsufficientFundsException("InsufficientFunds");
+           }
+         }
+    }
+
+
+    public void checkCurrencyValidation(Integer userId, Integer projectId){
+        Customer customer =  customerRepository.findById(userId);
+        Optional<Wallet> walletOptional =  walletRepository.findByIdForUpdateNative(customer.getWalletId());
+        if(walletOptional.isPresent()) {
+            Wallet wallet = walletOptional.get();
+            Product product = productRepository.findById(projectId);
+            Merchant merchant =  merchantRepository.findById(product.getMerchantId());
+            Optional<Wallet> walletMerchantOptional =  walletRepository.findByIdForUpdateNative(merchant.getWalletId());
+            Wallet wallet1 = walletMerchantOptional.get();
+            if(!wallet.getCurrencyType().equalsIgnoreCase(wallet1.getCurrencyType())){
+                throw new InValidCurrencyException("InsufficientFunds");
+            }
+        }
+    }
 
 }
